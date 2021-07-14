@@ -1,7 +1,7 @@
 package hellospring.demo.controller;
 
 import hellospring.demo.domain.Member;
-import hellospring.demo.mapper.MemberMapper;
+import hellospring.demo.mapper.Mapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,14 +12,10 @@ import java.util.Optional;
 @RequestMapping("/api/members")
 public class MemberController {
 
-    private MemberMapper mapper;
-
-    public MemberController(MemberMapper mapper) {
+    private Mapper mapper;
+    public MemberController(Mapper mapper) {
         this.mapper = mapper;
     }
-
-//    @Autowired
-//    private JdbcTemplateMemberRepository memberRepository;
 
     // 조회
     @GetMapping
@@ -32,8 +28,7 @@ public class MemberController {
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public Member add(@RequestBody Member member) {
-//        memberRepository.save(member);
-//        return member;
+    //    memberRepository.save(member);
         mapper.insertMember(member);
         return member;
     }

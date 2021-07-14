@@ -1,6 +1,30 @@
-<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
-<mapper xmlns="http://mybatis.org/schema/mybatis-mapper" namespace="com.hellospring.demo.mapper.MemberMapper">
-    <select id="getById" resultType="com.hellospring.demo.dto.MemberDto">
-        select * from member where id = #{id};
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hellospring.demo.mapper.Mapper">
+
+    <!-- 전체 member 조회 -->
+    <select id="getAll" resultType="hellospring.demo.domain.Member">
+        select * from member
     </select>
+
+    <!-- id로 member 조회 -->
+    <select id="getById" parameterType="long" resultType="hellospring.demo.domain.Member">
+        select * from member where id = #{id}
+    </select>
+
+    <!-- member 등록 -->
+    <insert id="insertMember" parameterType="hellospring.demo.domain.Member" useGeneratedKeys="true" keyProperty="id">
+        insert into Member(name) values(#{name})
+    </insert>
+
+    <!-- member 수정 -->
+    <update id="updateMember">
+        update Member set name=#{name} where id=#{id}
+    </update>
+
+    <!-- member 삭제 -->
+    <update id="deleteMember">
+        delete from Member where id=#{id}
+    </update>
+
 </mapper>
