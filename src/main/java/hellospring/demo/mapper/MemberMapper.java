@@ -1,5 +1,6 @@
 package hellospring.demo.mapper;
 
+import hellospring.demo.domain.Criteria;
 import hellospring.demo.domain.Member;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -9,7 +10,9 @@ import java.util.Optional;
 
 @org.apache.ibatis.annotations.Mapper
 @Repository
-public interface Mapper {
+public interface MemberMapper {
+    // 페이징 처리
+    List<Member> getListWithPaging(Criteria criteria);
 
     // @Param("id"): 파라미터로 들어오는 long id를 select 문의 where id=#{id}와 맵핑하기 위한 애노테이션
     //@Select("select * from member where id=#{id}")

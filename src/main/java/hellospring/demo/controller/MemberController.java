@@ -1,7 +1,8 @@
 package hellospring.demo.controller;
-
+import hellospring.demo.domain.Criteria;
 import hellospring.demo.domain.Member;
-import hellospring.demo.mapper.Mapper;
+import hellospring.demo.mapper.MemberMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,16 +13,18 @@ import java.util.Optional;
 @RequestMapping("/api/members")
 public class MemberController {
 
-    private Mapper mapper;
-    public MemberController(Mapper mapper) {
-        this.mapper = mapper;
+    @Autowired
+    private MemberMapper memberMapper;
+    @Autowired
+    public MemberController(MemberMapper memberMapper) {
+        this.memberMapper = memberMapper;
     }
 
     // 조회
     @GetMapping
-    public List<Member> getAll() {
+    public List<Member> getAll(@RequestBody Criteria criteria) {
     //    return memberRepository.findAll();
-        return mapper.getAll();
+        return memberMapper.getListWithPaging(criteria);
     }
 
     // 입력
@@ -29,28 +32,28 @@ public class MemberController {
     @ResponseStatus(code = HttpStatus.CREATED)
     public Member add(@RequestBody Member member) {
     //    memberRepository.save(member);
-        mapper.insertMember(member);
+        memberMapper.insertMember(member);
         return member;
     }
      // id로 회원 조회
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Optional<Member> getById(@PathVariable long id){
    //     return memberRepository.findById(id);
-        return mapper.getById(id);
+        return memberMapper.getById(id);
     }
 
     // 수정
    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public void update(@PathVariable long id, @RequestBody Member member){
     //    memberRepository.updateMember(id, member.getName());
-        mapper.updateMember(id, member.getName());
+       memberMapper.updateMember(id, member.getName());
     }
 
     // 삭제
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void remove(@PathVariable long id){
     //    memberRepository.deleteMember(id);
-        mapper.deleteMember(id);
+        memberMapper.deleteMember(id);
     }
 }
 

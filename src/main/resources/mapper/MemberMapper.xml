@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="hellospring.demo.mapper.Mapper">
+<mapper namespace="hellospring.demo.mapper.MemberMapper">
+
+    <!-- 페이징 처리 -->
+<!--    <select id="getListWithPaging" resultType="hellospring.demo.domain.Member">-->
+<!--&lt;!&ndash;        SELECT * FROM (SELECT ROWNUM AS NUM, ORDER_MEMBER.* FROM (SELECT * FROM MEMBER order by id desc) AS ORDER_MEMBER)&ndash;&gt;-->
+<!--&lt;!&ndash;        WHERE NUM BETWEEN #{pageNum} AND #{amount}&ndash;&gt;-->
+<!--        <![CDATA[-->
+<!--            select * from(-->
+<!--            select rownum as rn, * from member where rownum <= #{pageNum} * #{amount})-->
+<!--            where rn > (#{pageNum}-1) * #{amount}-->
+<!--        ]]>-->
+<!--    </select>-->
+
+    <select id="getListWithPaging" resultType="hellospring.demo.domain.Member">
+        select * from (select * from member order by id asc) as order_member limit #{amount} offset (#{pageNum}-1) * #{amount};
+    </select>
 
     <!-- 전체 member 조회 -->
     <select id="getAll" resultType="hellospring.demo.domain.Member">
