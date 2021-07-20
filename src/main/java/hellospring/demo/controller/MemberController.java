@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +23,7 @@ public class MemberController {
 
     // 조회
     @GetMapping
-    public List<Member> getAll(@RequestBody Criteria criteria) {
+    public List<Member> getAll(Criteria criteria) {
     //    return memberRepository.findAll();
         return memberMapper.getListWithPaging(criteria);
     }
