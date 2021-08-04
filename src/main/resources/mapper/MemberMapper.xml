@@ -3,16 +3,6 @@
 <mapper namespace="hellospring.demo.mapper.MemberMapper">
 
     <!-- 페이징 처리 -->
-<!--    <select id="getListWithPaging" resultType="hellospring.demo.domain.Member">-->
-<!--&lt;!&ndash;        SELECT * FROM (SELECT ROWNUM AS NUM, ORDER_MEMBER.* FROM (SELECT * FROM MEMBER order by id desc) AS ORDER_MEMBER)&ndash;&gt;-->
-<!--&lt;!&ndash;        WHERE NUM BETWEEN #{pageNum} AND #{amount}&ndash;&gt;-->
-<!--        <![CDATA[-->
-<!--            select * from(-->
-<!--            select rownum as rn, * from member where rownum <= #{pageNum} * #{amount})-->
-<!--            where rn > (#{pageNum}-1) * #{amount}-->
-<!--        ]]>-->
-<!--    </select>-->
-
     <select id="getListWithPaging" resultType="hellospring.demo.domain.Member">
         select * from (select * from member order by id asc) as order_member limit #{amount} offset (#{pageNum}-1) * #{amount};
     </select>
@@ -29,12 +19,12 @@
 
     <!-- member 등록 -->
     <insert id="insertMember" parameterType="hellospring.demo.domain.Member" useGeneratedKeys="true" keyProperty="id">
-        insert into Member(name) values(#{name})
+        insert into Member(password, name, salt) values(#{password}, #{name}, #{salt})
     </insert>
 
     <!-- member 수정 -->
-    <update id="updateMember">
-        update Member set name=#{name} where id=#{id}
+    <update id="updateMember" parameterType="hellospring.demo.domain.Member">
+        update Member set password=#{password}, name=#{name} where id=#{id}
     </update>
 
     <!-- member 삭제 -->

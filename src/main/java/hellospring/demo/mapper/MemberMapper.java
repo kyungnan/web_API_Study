@@ -3,6 +3,7 @@ package hellospring.demo.mapper;
 import hellospring.demo.domain.Criteria;
 import hellospring.demo.domain.Member;
 import org.apache.ibatis.annotations.*;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,9 +28,10 @@ public interface MemberMapper {
     int insertMember(Member member);
 
     //  @Update("update member set name=#{name} where id=#{id}")
-    int updateMember(@Param("id") long id, @Param("name") String name);
+    int updateMember(@Param("id") long id, @Param("password") String password, @Param("name") String name);
 
     //  @Delete("delete from member where id=#{id}")
     int deleteMember(@Param("id") long id);
+
 
 }
